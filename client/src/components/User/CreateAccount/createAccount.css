@@ -1,0 +1,22 @@
+#createAccount {
+    display: block;
+    margin: 150px auto;
+    max-width: 350px;
+}
+
+#createAccount .formArea {
+    display: inline-flex;
+    flex-direction: row;
+    flex: 1;
+    max-width: 300px;
+}
+
+#createAccount .intro {
+    font-weight: bold;
+    font-size: 25px;
+}
+
+#createAccount .discription {
+    font-weight: bold;
+    font-size: 17px;
+}

@@ -1,0 +1,14 @@
+.navbar { 
+    background-color: #03A9F4; 
+    opacity: 1;
+}
+
+.navbar .nav-item {
+    font-size: 1rem;
+    padding-right: 5rem;
+    font-weight: bold;
+}
+
+.navbar .nav-item .active {
+    color: #c52cc5
+}

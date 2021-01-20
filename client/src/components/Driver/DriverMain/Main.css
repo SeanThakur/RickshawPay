@@ -1,0 +1,20 @@
+
+  .container {
+    margin-top: 2rem;
+  }
+
+  .card {
+    cursor: pointer;
+  }
+
+  .card:hover {
+    background-color: #f6fbfc
+  }
+  
+  #panel {
+    padding: 50px;
+    margin-top: 10px;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 5px;
+    max-height:20px;
+  }

@@ -1,0 +1,48 @@
+#introduction .auto {
+    font-weight: bold;
+    font-size: 25px; 
+}
+
+#introduction .img-fluid {
+    margin: 20px auto;
+}
+
+#introduction .auto-intro {
+    font-weight: bold;
+    font-size: 17px; 
+}
+
+#BookARide {
+    max-width: 700px;
+    margin: auto;
+    border-radius: 0px;
+    border: 1px solid #dfd6d6;
+    background-image: url("../../../assets/telegram.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: local;
+}
+
+#BookARide .request{
+    font-weight: bold;
+    font-size: 25px; 
+}
+
+#WhyRideWithUs .intro {
+    font-weight: bold;
+    font-size: 25px; 
+}
+
+#WhyRideWithUs .intro-discription {
+    font-weight: 500;
+    font-size: 17px; 
+}
+
+#WhyRideWithUs .title {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#WhyRideWithUs .title-description {
+    font-size: 17px;
+}
