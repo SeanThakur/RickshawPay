@@ -1,13 +1,47 @@
-import React from 'react'
+import React , {useState} from 'react'
 import './createAccount.css'
+import {useDispatch} from 'react-redux';
+import {
+    setPhoneNumbers
+} from '../../../store/feature/phoneNumber/actions';
 
 //LOGOS
 import Logo from '../../../assets/destination.png';
 
-const createAccount = () => {
+const CreateAccount = () => {
+    const dispatch = useDispatch();
+    // const phone = useSelector(state => state.phone);
+
+    const [phoneNumber, setPhone] = useState('');
+
+    const phoneNumberChangeHandler = (e) => {
+        setPhone(e.target.value);
+    }
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+        //  dispatch(getPhoneCount(phoneNumber));
+         const data = {
+            number: phoneNumber
+        }
+        //const myData = JSON.parse(data);
+        dispatch(setPhoneNumbers(data));
+        window.location.href = '/profile'
+        // if(phone.phoneCount === 0) {
+           
+        //     window.location.href = '/login'
+        // }else {
+        //     const data = {
+        //         phone: phoneNumber
+        //     }
+        //     dispatch(setPhoneNumbers(data));
+        //      window.location.href = '/profile'
+        // }
+    }
+
     return (
         <>
-            <div id="createAccount" class="text-center">
+            <div id="createAccount" className="text-center">
                 <p>
                     <img 
                         src={Logo}
@@ -17,22 +51,33 @@ const createAccount = () => {
                     />
                 </p>
                 <div>
-                    <div class="intro">GET MOVING</div>
-                    <div class="discription">Enter Your Phone Number</div>
+                    <div className="intro">GET MOVING</div>
+                    <div className="discription">Enter Your Phone Number</div>
                 </div>
-                <div class="my-4">
-                    <div class="row">
-                        <div class="mx-auto formArea">                           
-                            <div class="card d-flex flex-row text-center p-2">91</div>   
-                            <div class="p-2"></div>
-                            <input type="number" placeholder="842******" class="form-control"/>
+                <form className="my-4" onSubmit={submitHandler}>
+                    <div className="row">
+                        <div className="mx-auto formArea">                           
+                            <div className="card d-flex flex-row text-center p-2">+91 </div>   
+                            <div className="p-2"></div>
+                            <input 
+                                type="text" 
+                                placeholder="****" 
+                                className="form-control"
+                                value={phoneNumber}
+                                onChange={phoneNumberChangeHandler}
+                                required
+                            />
                         </div>
                     </div>
-                </div>
-                <button class="btn btn-primary btn-block">NEXT</button>
+                    <input 
+                        type="submit"
+                        value="NEXT"
+                        className="btn btn-primary btn-block"
+                    />
+                </form>
             </div>
         </>
     )
 }
 
-export default createAccount
+export default CreateAccount

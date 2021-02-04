@@ -1,11 +1,95 @@
 import React from 'react'
+import {useDispatch, useSelector} from 'react-redux';
 import './Navbar.css'
+
+import {
+    Logout
+} from '../../../../store/feature/auth/actions';
 
 //LOGO
 import navbarLogo from '../../../../assets/destination.png';
 import { NavLink } from 'react-router-dom';
 
 const Navbar = () => {
+    const dispatch = useDispatch();
+    const auth = useSelector(state => state.auth);
+
+    const logoutHandler = (e) => {
+        e.preventDefault();
+        dispatch(Logout());
+    }
+
+    const authLink = (
+        <>
+            <li className="nav-item">
+                <NavLink className="nav-link text-light" to="/ride-history">Ride History</NavLink>
+            </li>
+            <li className="nav-item">
+                <div className="nav-link text-light" onClick={logoutHandler}>LOGOUT</div>
+            </li>
+        </>
+    )
+
+    const guestLink = (
+        <>
+            <li className="nav-item">
+                <div 
+                    className="nav-link text-light" 
+                    data-toggle="modal"
+                    data-target="#exampleModal">
+                        LOGIN 
+                    </div>
+            </li>
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <h4 className="lead text-danger">LOGIN</h4>
+                            <div className="row">
+                                <div className="col-6">
+                                    <NavLink 
+                                        className="nav-link text-dark btn btn-outline-info" 
+                                        to="/admin/driver/login"
+                                    >
+                                        LOGIN TO DRIVE
+                                    </NavLink>
+                                </div>
+                                <div className="col-6">
+                                    <NavLink 
+                                        className="nav-link text-dark btn btn-outline-info" 
+                                        to="/login"
+                                    >
+                                        LOGIN TO RIDE
+                                    </NavLink>
+                                </div>
+                            </div>
+                            <hr />
+                            <h4 className="lead text-danger">SIGN UP</h4>
+                            <div className="row">
+                                <div className="col-6">
+                                    <NavLink 
+                                        className="nav-link text-dark btn btn-outline-info" 
+                                        to="/admin/driver/account"
+                                    >
+                                        SIGNUP TO DRIVE
+                                    </NavLink>
+                                </div>
+                                <div className="col-6">
+                                    <NavLink 
+                                        className="nav-link text-dark btn btn-outline-info" 
+                                        to="/profile"
+                                    >
+                                        SIGNUP TO RIDE
+                                    </NavLink>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
+    )
+
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-light py-1">
@@ -31,9 +115,9 @@ const Navbar = () => {
                     <li className="nav-item">
                         <NavLink className="nav-link text-light" to="/">BOOK A RIDE</NavLink>
                     </li>
-                    <li className="nav-item">
-                        <NavLink className="nav-link text-light" to="/help">HELP</NavLink>
-                    </li>
+                    {
+                        auth.isAuth ? authLink : guestLink
+                    }
                 </ul>
                 </div>
             </nav> 

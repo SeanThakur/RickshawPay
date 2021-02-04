@@ -1,20 +1,66 @@
 
-  .container {
-    margin-top: 2rem;
-  }
+.container {
+  margin-top: 2rem;
+}
 
-  .card {
-    cursor: pointer;
-  }
+#location {
+  padding: 5px;
+  margin-left: 7.5rem;
+  margin-top: 1.4rem;
+  border: 1px solid #aaaaac;
+  border-radius: 10px;
+  max-width: 170px;
+  display: flex;
+  justify-content: space-evenly;
+  font-size: 20px;
+  background-color:#f7f5f4;
+  cursor: pointer;
+}
 
-  .card:hover {
-    background-color: #f6fbfc
-  }
-  
-  #panel {
-    padding: 50px;
-    margin-top: 10px;
-    border: 1px solid rgba(0,0,0,.125);
-    border-radius: 5px;
-    max-height:20px;
-  }
+.card {
+  cursor: pointer;
+}
+
+.card:hover {
+  background-color: #f6fbfc
+}
+
+
+.city-abbr {
+  color: #aaaaac;
+  font-size: 20px;
+  text-transform: uppercase;
+}
+
+.fare-abbr {
+  color: #5a5a5c;
+  font-size: 25px;
+  text-transform: uppercase;
+}
+
+.distance {
+  color: #3b8acf;
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 50px;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.rickshaw-icon {
+  height: 26px;  
+  width: 26px;
+}
+
+.btn-book {
+  font-size: 20px;
+}
+
+.btn-ignore {
+  font-size: 20px;
+}
+
+.btn-disabled {
+  cursor: not-allowed;
+  text-transform: uppercase;
+}

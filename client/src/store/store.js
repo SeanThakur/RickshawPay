@@ -2,7 +2,18 @@ import {createStore, applyMiddleware, compose} from "redux";
 import thunk from "redux-thunk";
 import rootReducer from "./rootreducer/rootreducer";
 
-const initalState = {};
+const rideInfoFromLocalStorage = localStorage.getItem('rideInfo') ? JSON.parse(localStorage.getItem('rideInfo')) : {}
+const rideFromLocalStorage = localStorage.getItem('rideToStorage') ? JSON.parse(localStorage.getItem('rideToStorage')) : {}
+
+const initalState = {
+    rideInfo: {
+        address : rideInfoFromLocalStorage
+    },
+    ride: {
+        ride : rideFromLocalStorage
+    }
+};
+
 const middleware = [thunk];
 
 const store = createStore(

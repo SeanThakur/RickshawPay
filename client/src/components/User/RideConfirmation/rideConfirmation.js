@@ -1,104 +1,160 @@
-import React from 'react'
+import React , {useEffect} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
 import './rideConfirmation.css';
+
+import {
+    getRideConfirmationDetails,
+    getBookingCheckedInfo
+} from '../../../store/feature/ride/actions';
 
 //LOGOS
 import autoRickshaw from '../../../assets/auto-ricksaw-side.png'
 
-const rideConfirmation = () => {
+const RideConfirmation = (props) => {
+
+    const dispatch = useDispatch();
+    const ride = useSelector(state => state.ride);
+
+    useEffect(() => {
+        dispatch(getRideConfirmationDetails(ride.ride.driver_account_id));
+        dispatch(getBookingCheckedInfo(ride.ride.u_id));
+    }, [dispatch, ride?.ride?.driver_account_id, ride.ride.u_id]);
+
+    useEffect(() => {
+        setInterval(() => {
+            if(ride?.rideStatus?.isBooked === 1) {
+                // props.history.push(`/map/${ride.ride.u_id}`)
+                window.location.href= `/map/${ride.ride.u_id}`;
+            }
+        }, 3000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    const auth = useSelector(state => state.auth);
+    const rideInfo = useSelector(state => state.rideInfo);
+
+    const authId = auth?.user?.result[0].id;
+
+    const totalPrice = ride?.driverDetails?.price * Number(ride?.ride?.distance.split(' ', [1]));
+
+    const sourceAddress = rideInfo?.address?.pickup.split(',').slice(0, 3).toString();
+
+    const destinationAddress = rideInfo?.address?.destination.split(',').slice(0, 3).toString();
+
     return (
         <>
-           <div class="ticket card">
-                <div class="ticket-header">
-                    <div class="ticket-departure">
-                        <h1 class="city-abbr">
+        <div className="row">
+            <div className="col m-3">
+           <div className="ticket card">
+                <div className="ticket-header">
+                    <div className="ticket-departure">
+                        <h1 className="city-abbr">
                             FROM
                         </h1>
-                        <span class="city-name">
-                            ANDHERI
+                        <span className="city-name text-uppercase">
+                            {
+                                sourceAddress
+                            }
                         </span>
                         <img 
                             src={autoRickshaw} 
                             alt="icon"
-                            class="rickshaw-icon"
+                            className="rickshaw-icon"
                         />
                     </div>
-                    <div class="ticket-destination">
-                        <h1 class="city-abbr text-left">
+                    <div className="ticket-destination">
+                        <h1 className="city-abbr">
                             TO
                         </h1>
-                        <span class="city-name">
-                            HOLY FAMILY
+                        <span className="city-name text-uppercase">
+                            {
+                                destinationAddress
+                            }
                         </span>
                     </div>
                 </div>
-                <div class="ticket-body">
-                    <div class="row">
-                        <div class="col text-left">
-                            <h2 class="name">
+                <div className="ticket-body">
+                    <div className="row">
+                        <div className="col text-left">
+                            <h2 className="name">
                                 FARE
                             </h2>
-                            <span class="value">
-                                50 RS
+                            <span className="value">
+                                {
+                                    totalPrice
+                                } RS
                             </span>
                         </div>
-                        <div class="col text-left">
-                            <h2 class="name">
+                        <div className="col text-left">
+                            <h2 className="name">
                                 AUTO ID
                             </h2>
-                            <span class="value">
-                                #254-6523-965
+                            <span className="value">
+                                #
+                                {
+                                     ride?.driverDetails?.id
+                                }
                             </span>
                         </div>
-                        <div class="col text-left">
-                            <h2 class="name">
+                        <div className="col text-left">
+                            <h2 className="name">
                                 TICKET ID
                             </h2>
-                            <span class="value">
-                                @TK-8468846
+                            <span className="value">
+                                @TK-
+                                {
+                                   ride?.driverDetails?.driver_account_id  
+                                }
                             </span>
                         </div>
                     </div>
-                    <div class="row mt-4">
-                        <div class="col-6">
-                            <div class="row-vertical">
-                                <div class="col item">
-                                    <h2 class="name">
+                    <div className="row mt-4">
+                        <div className="col-6">
+                            <div className="row-vertical">
+                                <div className="col item">
+                                    <h2 className="name">
                                         AUTO NO
                                     </h2>
-                                    <span class="value">
-                                        8431681684658
+                                    <span className="value">
+                                       {
+                                            ride?.driverDetails?.auto_number
+                                       }
                                     </span>
                                 </div>
-                                <div class="col item">
-                                    <h2 class="name">
-                                        AUTO NO
+                                <div className="col item">
+                                    <h2 className="name">
+                                        LICENSE NO
                                     </h2>
-                                    <span class="value">
-                                        8431681684658
+                                    <span className="value">
+                                        {
+                                            ride?.driverDetails?.licence_id
+                                        }
                                     </span>
                                 </div>
-                                <div class="col item">
-                                    <h2 class="name">
+                                <div className="col item">
+                                    <h2 className="name">
                                         PASSENGER NO
                                     </h2>
-                                    <span class="value">
-                                        8695712365
+                                    <span className="value">
+                                        {authId}
                                     </span>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div className="col-6">
                             <img 
                                 src="https://1.bp.blogspot.com/-tWxtTHsnBvQ/Wx0E35ydjVI/AAAAAAAAA6w/SxUTG14Kx8ABJkT4_7S18j4W-Sj5a50YACLcBGAs/s1600/qr.png" 
                                 alt="Ticket Code" 
-                                class="ticket-qrcode"
+                                className="ticket-qrcode"
                             />
                         </div>
                     </div>
                 </div>
             </div> 
+            </div>
+        </div>
         </>
     )
 }
 
-export default rideConfirmation
+export default RideConfirmation

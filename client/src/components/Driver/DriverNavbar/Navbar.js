@@ -1,11 +1,44 @@
-import React from 'react'
+import React from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import './Navbar.css';
+
+import {
+    driverLogout
+} from '../../../store/feature/Driver/auth/actions'
 
 //Logos
 import Logo from '../../../assets/destination.png';
 import { NavLink } from 'react-router-dom';
 
 const Navbar = () => {
+
+    const dispatch = useDispatch();
+    const driverAuth = useSelector(state => state.driverAuth);
+
+    const logoutHandler = (e) => {
+        e.preventDefault();
+        dispatch(driverLogout());
+    }
+
+    const authLink = (
+        <>
+            <li className="nav-item">
+                <NavLink className="nav-link text-light" to="/admin/driver/profile">PROFILE</NavLink>
+            </li>
+            <li className="nav-item">
+                <div className="nav-link text-light" onClick={logoutHandler}>LOGOUT</div>
+            </li>
+        </>
+    )
+
+    const guestLink = (
+        <>
+            <li className="nav-item">
+                <NavLink className="nav-link text-light" to="/admin/driver/login">LOGIN</NavLink>
+            </li>
+        </>
+    )
+
     return (
         <>
         {/* Navigation Bar  */}
@@ -23,12 +56,9 @@ const Navbar = () => {
             </button>  
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav ml-auto">
-                <li className="nav-item">
-                    <NavLink className="nav-link text-light" to="/admin/driver/profile">PROFILE</NavLink>
-                </li>
-                <li className="nav-item">
-                    <NavLink className="nav-link text-light" to="/logout">LOGOUT</NavLink>
-                </li>
+                {
+                    driverAuth.isLogged ? authLink : guestLink
+                }
             </ul>
             </div>
         </nav>

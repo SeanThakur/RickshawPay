@@ -1,5 +1,11 @@
-import React from 'react'
+import React, {useState, useRef, useEffect} from 'react'
+import {useSelector, useDispatch} from 'react-redux'
 import './Main.css'
+
+//Actions
+import {
+    setRideInfo
+} from '../../../store/feature/rideAddress/actions';
 
 //Components
 import Navbar from '../Layout/Navbar/Navbar'
@@ -17,7 +23,112 @@ import rickshaw3 from '../../../assets/rickshaw3.jpg';
 import cashless from '../../../assets/Cashless transaction.jpg';
 import explore from '../../../assets/explore.jpg';
 
-const Main = () => {
+//Google map autocomplete integration
+let autoComplete;
+let autoComplete2;
+
+const loadScript = (url, callback, callback2) => {
+  let script = document.createElement("script");
+  script.type = "text/javascript";
+
+  if (script.readyState) {
+    script.onreadystatechange = function() {
+      if (script.readyState === "loaded" || script.readyState === "complete") {
+        script.onreadystatechange = null;
+        callback();
+        callback2();
+      }
+    };
+  } else {
+    script.onload = () => {
+        callback();
+        callback2();
+    };
+  }
+
+  script.src = url;
+  document.getElementsByTagName("head")[0].appendChild(script);
+};
+
+function handleScriptLoad(updateQuery, autoCompleteRef) {
+  autoComplete = new window.google.maps.places.Autocomplete(
+    autoCompleteRef.current,
+    {
+        componentRestrictions: { country: "IN" }
+    }
+  );
+  autoComplete.setFields(["address_components", "formatted_address"]);
+  autoComplete.addListener("place_changed", () =>
+    handlePlaceSelect(updateQuery)
+  );
+}
+
+async function handlePlaceSelect(updateQuery) {
+    const addressObject = autoComplete.getPlace();
+    const query = addressObject.formatted_address;
+    updateQuery(query);
+}
+
+
+function handleScriptLoad2(updateQuery, autoCompleteRef) {
+  autoComplete2 = new window.google.maps.places.Autocomplete(
+    autoCompleteRef.current,
+    {
+        componentRestrictions: { country: "IN" }
+    }
+  );
+  autoComplete2.setFields(["address_components", "formatted_address"]);
+  autoComplete2.addListener("place_changed", () =>
+    handlePlaceSelect2(updateQuery)
+  );
+}
+
+async function handlePlaceSelect2(updateQuery) {
+  const addressObject = autoComplete2.getPlace();
+  const query = addressObject.formatted_address;
+  updateQuery(query);
+}
+
+
+const Main = (props) => {
+    const dispatch = useDispatch();
+    const auth = useSelector(state => state.auth);
+
+    const [pickup , setPickup] = useState('');
+    const [destination, setDestination] = useState('');
+    const pickUpAutoCompleteRef = useRef(null);
+    const destinationAutoCompleteRef = useRef(null);
+
+    useEffect(() => {
+        loadScript(
+            `https://maps.googleapis.com/maps/api/js?key=AIzaSyB5n4BFqHd_Skm947FV2Z0EYRxwE0UJ2Ms&libraries=places`,
+            () => handleScriptLoad(setPickup, pickUpAutoCompleteRef),
+            () => handleScriptLoad2(setDestination, destinationAutoCompleteRef)
+        );
+    }, [])
+
+    const handlePickupChange = (e) => {
+        setPickup(e.target.value);
+    }
+
+    const handleDestinationChange = (e) => {
+        setDestination(e.target.value);
+    }
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+        const data = {
+            pickup,
+            destination
+        }
+        dispatch(setRideInfo(data));
+        if(auth.isAuth) {
+            props.history.push(`/current-ride`)
+        } else {
+            props.history.push("/profile")
+        }
+    }
+
     return (
         <>
             <Navbar />
@@ -44,41 +155,35 @@ const Main = () => {
                             </div>
                             <div className="mt-3">
                                 <span className="pr-2">
-                                    <a href="/">
                                         <img 
                                             src={tea} 
                                             alt="Enter pickup location"
                                             height="38"
                                             width="41"
-                                        /> 
-                                    </a>
+                                        />
                                 </span>
                                 <span className="pr-2">
-                                    <a  href="/">
                                         <img 
                                             src={rupee} 
                                             alt="Enter pickup location"
                                             height="38"
                                             width="41"
-                                        /> 
-                                    </a>
+                                        />
                                 </span>
                                 <span className="pr-2">
-                                    <a  href="/">
                                         <img 
                                             src={creditCard} 
                                             alt="Enter pickup location"
                                             height="38"
                                             width="41"
-                                        /> 
-                                    </a>
+                                        />
                                 </span>
                             </div>
                         </div>
                     </div>
                 </div>
                  {/* Section 2  */}
-                <div id="BookARide" className="card px-3 my-5">
+                <form id="BookARide" className="card px-3 my-5" onSubmit={submitHandler}>
                     <div className="text-center">
                         <div className="request mt-3">Request a ride now</div>
                         <p className="lead">Your everyday travel partner</p>
@@ -100,6 +205,10 @@ const Main = () => {
                                     type="text" 
                                     placeholder="Enter pickup location" 
                                     className="form-control"
+                                    value={pickup}
+                                    onChange={handlePickupChange}
+                                    ref={pickUpAutoCompleteRef}
+                                    required
                                 />
                             </div>
                         </div>
@@ -119,14 +228,20 @@ const Main = () => {
                                     type="text" 
                                     placeholder="Enter destination" 
                                     className="form-control"
+                                    value={destination}
+                                    onChange={handleDestinationChange}
+                                    ref={destinationAutoCompleteRef}
+                                    required
                                 />
                             </div>
                         </div>
                     </div>
                     <div className="text-right mb-3 pr-3">
-                        <button className="btn btn-dark">Book</button>
+                        <button className="btn btn-dark">
+                            Book
+                        </button>
                     </div>
-                </div>
+                </form>
                  {/* Section 3  */}
                 <div id="WhyRideWithUs" className="my-5">
                     <div className="mt-3">
