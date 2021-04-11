@@ -47,40 +47,40 @@ const Navbar = () => {
                             <h4 className="lead text-danger">LOGIN</h4>
                             <div className="row">
                                 <div className="col-6">
-                                    <NavLink 
+                                    <a 
                                         className="nav-link text-dark btn btn-outline-info" 
-                                        to="/admin/driver/login"
+                                        href="/admin/driver/login"
                                     >
                                         LOGIN TO DRIVE
-                                    </NavLink>
+                                    </a>
                                 </div>
                                 <div className="col-6">
-                                    <NavLink 
+                                    <a 
                                         className="nav-link text-dark btn btn-outline-info" 
-                                        to="/login"
+                                        href="/login"
                                     >
                                         LOGIN TO RIDE
-                                    </NavLink>
+                                    </a>
                                 </div>
                             </div>
                             <hr />
                             <h4 className="lead text-danger">SIGN UP</h4>
                             <div className="row">
                                 <div className="col-6">
-                                    <NavLink 
+                                    <a 
                                         className="nav-link text-dark btn btn-outline-info" 
-                                        to="/admin/driver/account"
+                                        href="/admin/driver/account"
                                     >
                                         SIGNUP TO DRIVE
-                                    </NavLink>
+                                    </a>
                                 </div>
                                 <div className="col-6">
-                                    <NavLink 
+                                    <a 
                                         className="nav-link text-dark btn btn-outline-info" 
-                                        to="/profile"
+                                        href="/profile"
                                     >
                                         SIGNUP TO RIDE
-                                    </NavLink>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -113,7 +113,7 @@ const Navbar = () => {
                         <NavLink className="nav-link text-light" exact to="/generate-pass">GENERATE PASS</NavLink>
                     </li>
                     <li className="nav-item">
-                        <NavLink className="nav-link text-light" to="/">BOOK A RIDE</NavLink>
+                        <a className="nav-link text-light" href="#BookARide">BOOK A RIDE</a>
                     </li>
                     {
                         auth.isAuth ? authLink : guestLink

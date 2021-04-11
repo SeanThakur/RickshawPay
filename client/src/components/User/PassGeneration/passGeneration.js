@@ -1,71 +1,149 @@
-import React from 'react'
+import React, {useEffect} from 'react'
+import {useSelector, useDispatch} from 'react-redux'
+import { NavLink } from 'react-router-dom';
+import {
+    getPass
+} from '../../../store/feature/passGeneration/action';
 import './passGeneration.css';
 
-const passGeneration = () => {
+const PassGeneration = () => {
+
+    const dispatch = useDispatch();
+    const auth = useSelector(state => state.auth);
+    const passGeneration = useSelector(state => state.passGeneration);
+
+    const profileId = auth?.user?.result[0]?.id;
+    const name = auth?.user?.result[0]?.first_name;
+    const phoneNumber = passGeneration?.passInfo?.phone_number;
+    const fromPlace = passGeneration?.passInfo?.from_place;
+    const toPlace = passGeneration?.passInfo?.to_place;
+    const fromDate = passGeneration?.passInfo?.from_date;
+    const toDate = passGeneration?.passInfo?.to_date;
+    const validity = passGeneration?.passInfo?.pass_validity;
+    const amount = passGeneration?.passInfo?.amount;
+
+    useEffect(() => {
+        dispatch(getPass(profileId));
+    }, [profileId, dispatch])
+
     return (
         <>
             <div id="generatePass">
-                <div class="card card-signin my-5">
-                    <div class="card-body">
-                        <h5 class="card-title text-center">
+                <div className="card card-signin my-5">
+                    <div className="card-body">
+                        <h5 className="card-title text-center">
                             <b>Online rickshaw pass generation system</b>
                         </h5>
-                        <form class="my-4">
-                            <div class="row my-2">
-                                <div class="col">
-                                    <div class="form-label-group">
-                                        <label for="userName">User name</label>
-                                        <input type="text" class="form-control" placeholder="name" required />
+                        <form className="my-4">
+                            <div className="row my-2">
+                                <div className="col">
+                                    <div className="form-label-group">
+                                        <label htmlFor="userName">User name</label>
+                                        <input 
+                                            type="text" 
+                                            className="form-control" 
+                                            placeholder="name" 
+                                            value={name}
+                                            readOnly
+                                            required
+                                        />
                                     </div>
                                 </div>
-                                <div class="col">
-                                    <div class="form-label-group">
-                                        <label for="phoneNumber">Phone number</label>
-                                        <input type="number" class="form-control" placeholder="+91 " required />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row my-2">
-                                <div class="col">
-                                    <div class="form-label-group">
-                                        <label for="fromPlace">From Place</label>
-                                        <input type="text" class="form-control" placeholder="from" required />
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-label-group">
-                                        <label for="toPlace">To Place</label>
-                                        <input type="number" class="form-control" placeholder="to" required />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row my-2">
-                                <div class="col-md-6">
-                                    <div class="form-label-group">
-                                        <label for="fromDate">From Date</label>
-                                        <input type="date" class="form-control" required />
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-label-group">
-                                        <label for="toDate">To Date</label>
-                                        <input type="date" class="form-control" required />
+                                <div className="col">
+                                    <div className="form-label-group">
+                                        <label htmlFor="phoneNumber">Phone number</label>
+                                        <input 
+                                            type="number" 
+                                            className="form-control" 
+                                            placeholder="+91 " 
+                                            value={phoneNumber}
+                                            required
+                                            readOnly 
+                                        />
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-label-group my-2">
-                                <label for="inputEmail">Pass Validity</label>
-                                <input type="text" class="form-control" placeholder="Pass Validity" required />
+                            <div className="row my-2">
+                                <div className="col">
+                                    <div className="form-label-group">
+                                        <label htmlFor="fromPlace">From Place</label>
+                                        <input 
+                                            type="text" 
+                                            className="form-control" 
+                                            placeholder="from" 
+                                            value={fromPlace}
+                                            required
+                                            readOnly 
+                                        />
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-label-group">
+                                        <label htmlFor="toPlace">To Place</label>
+                                        <input 
+                                            type="text" 
+                                            className="form-control" 
+                                            placeholder="to" 
+                                            value={toPlace}
+                                            required
+                                            readOnly 
+                                        />
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-label-group my-2">
-                                <label for="inputPassword">Amount</label>
-                                <input type="number" class="form-control" placeholder="Amount" required />
+                            <div className="row my-2">
+                                <div className="col-md-6">
+                                    <div className="form-label-group">
+                                        <label htmlFor="fromDate">From Date</label>
+                                        <input 
+                                            type="date" 
+                                            className="form-control" 
+                                            value={fromDate}
+                                            required
+                                            readOnly 
+                                        />
+                                    </div>
+                                </div>
+                                <div className="col-md-6">
+                                    <div className="form-label-group">
+                                        <label htmlFor="toDate">To Date</label>
+                                        <input 
+                                            type="date" 
+                                            className="form-control" 
+                                            value={toDate}
+                                            required
+                                            readOnly 
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="form-label-group my-2">
+                                <label htmlFor="inputEmail">Pass Validity</label>
+                                <input 
+                                    type="text" 
+                                    className="form-control" 
+                                    placeholder="Pass Validity" 
+                                    value={validity}
+                                    required
+                                    readOnly 
+                                />
+                            </div>
+                            <div className="form-label-group my-2">
+                                <label htmlFor="inputPassword">Amount</label>
+                                <input 
+                                    type="number" 
+                                    className="form-control" 
+                                    placeholder="Amount" 
+                                    value={amount}
+                                    required
+                                    readOnly 
+                                />
                             </div>
                         </form>
-                        <p class="text-right mt-3">
-                            <a href="/">
+                        <p className="text-right mt-3">
+                            <NavLink to="/renew-pass">
                                 PASS RENEWAL
-                            </a>
+                            </NavLink>
                         </p>
                     </div>
                 </div>
@@ -74,4 +152,4 @@ const passGeneration = () => {
     )
 }
 
-export default passGeneration
+export default PassGeneration

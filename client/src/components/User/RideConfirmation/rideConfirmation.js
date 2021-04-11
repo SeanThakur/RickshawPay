@@ -14,24 +14,19 @@ const RideConfirmation = (props) => {
 
     const dispatch = useDispatch();
     const ride = useSelector(state => state.ride);
+    const auth = useSelector(state => state.auth);
+    const rideInfo = useSelector(state => state.rideInfo);
 
     useEffect(() => {
         dispatch(getRideConfirmationDetails(ride.ride.driver_account_id));
         dispatch(getBookingCheckedInfo(ride.ride.u_id));
     }, [dispatch, ride?.ride?.driver_account_id, ride.ride.u_id]);
 
-    useEffect(() => {
-        setInterval(() => {
-            if(ride?.rideStatus?.isBooked === 1) {
-                // props.history.push(`/map/${ride.ride.u_id}`)
-                window.location.href= `/map/${ride.ride.u_id}`;
-            }
-        }, 3000);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
-    const auth = useSelector(state => state.auth);
-    const rideInfo = useSelector(state => state.rideInfo);
+    setInterval(() => {
+        if(ride?.rideStatus?.isBooked === 1) {
+            window.location.href = `/map/${ride.ride.u_id}`;
+        }
+    }, 3000);
 
     const authId = auth?.user?.result[0].id;
 

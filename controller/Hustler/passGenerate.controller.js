@@ -1,9 +1,9 @@
-import profile from '../../service/Driver/profile.service.js'
+import passGeneration from '../../service/Hustler/passGenerate.service.js'
 
 export default {
-    profile: (req,res) => {
+    setPass: (req,res) => {
         const data = req.body;
-        profile.profileQuery(data, (err, result) =>{
+        passGeneration.GeneratePass(data, (err, result) =>{
             if(err) {
                 return res.status(500).json({
                     success: false,
@@ -17,9 +17,9 @@ export default {
             }
         });
     },
-    getProfile: (req,res) => {
+    getPass: (req,res) => {
         const data = req.params;
-        profile.getProfileQuery(data, (err, result) =>{
+        passGeneration.GetPass(data, (err, result) =>{
             if(err) {
                 return res.status(500).json({
                     success: false,

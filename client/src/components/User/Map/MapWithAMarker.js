@@ -49,10 +49,10 @@ const MapWithAMarker = compose(
           const DirectionsService = await new window.google.maps.DirectionsService();
     
           await DirectionsService.route({
-            origin: new window.google.maps.LatLng(this.props.sourceLat, this.props.sourceLng),
-            destination: new window.google.maps.LatLng(this.props.destinationLat, this.props.destinationLng),
-            travelMode: window.google.maps.TravelMode.DRIVING,
-            unitSystem: window.google.maps.UnitSystem.METRIC
+            origin: await new window.google.maps.LatLng(this.props.sourceLat, this.props.sourceLng),
+            destination: await new window.google.maps.LatLng(this.props.destinationLat, this.props.destinationLng),
+            travelMode: await window.google.maps.TravelMode.DRIVING,
+            unitSystem: await window.google.maps.UnitSystem.METRIC
           }, (result, status) => {
             if (status === window.google.maps.DirectionsStatus.OK) {
               this.setState({

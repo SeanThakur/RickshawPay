@@ -11,6 +11,9 @@ import {
     setRideBookingDone,
     getDriverLocation
 } from '../../../store/feature/Driver/main/actions';
+import {
+    getDriverProfile
+} from '../../../store/feature/Driver/profile/actions';
 
 import autoRickshaw from '../../../assets/auto-ricksaw-side.png'
 import map from '../../../assets/google-maps.png'
@@ -20,12 +23,14 @@ const Main = (props) => {
     const dispatch = useDispatch();
     const driverAuth = useSelector(state => state.driverAuth);
     const driverRideInfo = useSelector(state => state.driverRideInfo);
+    const driverProfile = useSelector(state => state.driverProfile);
 
     const driverAccountId = driverAuth.driver.result[0].id;
 
     useEffect(() => {
         dispatch(getRideBookingDetails(driverAccountId));
         dispatch(getDriverLocation(driverAccountId));
+        dispatch(getDriverProfile(driverAccountId));
     }, [dispatch, driverAccountId])
 
     const [lat, setLat] = useState(''); 
@@ -78,6 +83,10 @@ const Main = (props) => {
         dispatch(setRideBookingDone(data));
         window.location.href = `/admin/driver/ride/${u_id}`
     }
+
+    const profileHandler = () => {
+        window.location.href = `/admin/driver/profile`;
+    }
     
     return (
         <div>
@@ -91,6 +100,16 @@ const Main = (props) => {
                             className="d-inline"
                         />
                         <div className="d-inline">Use Location</div>
+                    </div>
+                )
+            }
+            {
+                driverProfile?.driverProfile?.length < 0 && (
+                    <div className="container">
+                        <p>Your Profile is not created follow the below link to create your profile and make yourself validate</p>
+                        <p className="btn btn-info" onClick={profileHandler}>
+                            Create your profile
+                        </p>
                     </div>
                 )
             }

@@ -26,5 +26,23 @@ export default {
                 }
             }
         )
+    },
+    getProfileQuery : (data, callback) => {
+        const query = `
+            SELECT * FROM driver_profile WHERE driver_profile.driver_account_id = ?
+        `;
+        pool.query(
+            query,
+            [
+                data.driver_account_id
+            ],
+            (err, result) => {
+                if(err) {
+                    return callback(err);
+                }else {
+                    return callback(null, result)
+                }
+            }
+        )
     }
 }

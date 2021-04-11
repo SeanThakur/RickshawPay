@@ -19,12 +19,7 @@ function DriverRide() {
         <>
         <Navbar />
         <div id="ride" className="row">
-            <div className="col-lg-4 mb-5">
-                <div id="info">
-                    Chat Section
-                </div>
-            </div>
-            <div className="col-lg-8">
+            <div className="col-lg-12 col-sm-12">
                 <div id="map">
                     <DriverRideMap
                         latitude={ride.ride.user_latitude}

@@ -117,7 +117,7 @@ const Ride = (props) => {
         );
     }, [rideInfo.address.pickup, rideInfo.address.destination])
 
-    const submitHandler = (e) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
         const locationData = {
             latitude: latitude,
@@ -134,17 +134,17 @@ const Ride = (props) => {
             destination: rideInfo.address.destination,
             user_longitude: longitude,
             user_latitude: latitude,
-            sourceLat: sourceLat,
-            sourceLng: sourceLng,
-            destinationLat: destinationLat,
-            destinationLng: destinationLng,
+            sourceLat: await sourceLat,
+            sourceLng: await sourceLng,
+            destinationLat: await destinationLat,
+            destinationLng: await destinationLng,
             distance: distance,
             driver_account_id: driver,
             user_account_id: userAccountId,
             u_id: uuidv4().toString()
         }
-        dispatch(getRideBooked(data));
-        dispatch(setRideToLocalStorage(data));
+        await dispatch(getRideBooked(data));
+        await dispatch(setRideToLocalStorage(data));
         props.history.push('/ride-confirmation');
     }
 

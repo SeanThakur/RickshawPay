@@ -1,0 +1,2 @@
+export const GET_PASS_INFO = "GET_PASS_INFO";
+export const GET_PASS_INFO_REQUEST = "GET_PASS_INFO_REQUEST";

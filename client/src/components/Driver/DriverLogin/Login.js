@@ -16,7 +16,7 @@ const Login = (props) => {
     useEffect(() => {
         if(driverAuth.isLogged)
         {
-            props.history.push('/admin/driver/profile')
+            props.history.push('/admin/driver/dashboard')
         } 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [driverAuth.isLogged])
